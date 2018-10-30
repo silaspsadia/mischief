@@ -1,5 +1,5 @@
-KMOD=	hello
-SRCS=	hello.c
+KMOD=	veriscan
+SRCS=	veriscan.c
 
 .include <bsd.kmod.mk>
 
