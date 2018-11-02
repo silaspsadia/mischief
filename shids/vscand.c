@@ -11,13 +11,21 @@
 
 #define BUFSIZE 4096
 
+/* vscand
+ * ======
+ * - Intended to work with the veriscan module
+ * - TODO: make extensible
+ */
+
 int 
 main(int argc, char *argv[])
 {
+	/* FIXME 
 	if (argc != 2) {
 		printf("Usage: %s <syscall no>\n", argv[0]);
 		exit(1);
 	}
+	*/
 
 	char buf[BUFSIZE];
 	int i, fd0, fd1, fd2;
@@ -49,6 +57,7 @@ main(int argc, char *argv[])
 	fd1 = dup(0);
 	fd2 = dup(0);
 
+	// XXX: make sure these get used to put everything in one place
 	char *logdir = "~/.vscan/";
 	char *logpath = "~/.vscan/vscan.log";
 
@@ -57,6 +66,7 @@ main(int argc, char *argv[])
 	}
 
 	while (1) {
+		// XXX: this is intended to be a quick hack. Make extensible.
 		system("perl -e 'syscall(210);' > vscan.log");
 		sleep(10);
 	}
