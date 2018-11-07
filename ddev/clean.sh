@@ -2,6 +2,6 @@
 
 for D in */
 do
-	cd $D && make
+	cd $D && make oclean
 	cd ..
 done
