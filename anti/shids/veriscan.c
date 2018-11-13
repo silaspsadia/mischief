@@ -8,6 +8,8 @@
 #include <sys/syscall.h>
 #include <sys/sysproto.h>
 
+#define DEBUG 1
+
 /* veriscan 
  * ========
  * - Intended to be loaded at boot (or XXX compiled in?) 
@@ -19,18 +21,20 @@ static sy_call_t *syscalldata[SYS_MAXSYSCALL];
 static int 
 veriscan(struct thread *td, void *syscall_args)
 {
-	for (int i = 0; i < SYS_MAXSYSCALL; i++) 
+	for (int i = 0; i < SYS_MAXSYSCALL; i++) { 
 		if (syscalldata[i] != sysent[i].sy_call) {
-			uprintf("[!!!] Detected anomaly at sysent[] offset %i\n"
-				"@%p\n", i, sysent[i].sy_call);
+			uprintf("[!!!] Detected anomaly at offset %i.\n", i);
+			uprintf("[!!!] Expected: %p. Found: %p\n", syscalldata[i], 
+				sysent[i].sy_call);
 			// Patch and check
 			sysent[i].sy_call = syscalldata[i];
 			if (syscalldata[i] == sysent[i].sy_call) 
-				uprintf("[***] Successfully patched KOM event at offset %i\n", i);
+				uprintf("[***] Successfully patched KOM event at offset %i.\n", i);
 			else 
-				uprintf("[!!!] Failed to patch KOM event at offset %i\n", i);	
+				uprintf("[!!!] Failed to patch KOM event at offset %i.\n", i);	
 
 		}
+	}
 		
 	return 0;
 }
