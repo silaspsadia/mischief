@@ -109,6 +109,6 @@ main(void)
 
 			}	
 		}
-		sleep(2);
+		sleep(1);
 	}
 }
