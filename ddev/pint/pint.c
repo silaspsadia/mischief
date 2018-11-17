@@ -179,7 +179,7 @@ pint_probe(device_t dev)
 static void
 pint_attach(device_t dev)
 {
-	struct pint_data *sc = device_get_softc(dev);
+struct pint_data *sc = device_get_softc(dev);
 	int error, unit =  device_get_unit(dev);
 	
 	/* Declare interrupt handler */
